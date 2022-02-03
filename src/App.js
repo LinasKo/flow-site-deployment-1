@@ -41,7 +41,7 @@ class App extends React.Component {
         }}
 
         afterResponsive={(isResponsive) =>{
-          
+          window.fullpage_api.fadingEffect.turnOff();
         }}
 
         render={({ state, fullpage_api }) => {
