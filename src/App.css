@@ -31,7 +31,7 @@
   --secondry-color: #0C646F;
   --white-color: #fff;
 
-  --btn-bg-color: #24745a; 
+  --btn-bg-color: #24745a;
 
   --primary-font-black: 'mulishblack';
   --primary-font-bold: 'mulishbold';
@@ -140,7 +140,7 @@
   background-size: cover;
   background-attachment: fixed;
   position: relative;
-  
+
 }
 .banner-section_left {
   padding-top: 90px;
@@ -419,7 +419,7 @@
   animation: fadeInUp 1.9s ease-in-out 0.1s;
 }
 /* Style Video Section */
-#video-section, 
+#video-section,
 #video-section-two,
 #video-section-three,
 #video-section-four{
@@ -432,7 +432,7 @@
 .women-video {
     width: 80%;
     margin: 10px auto;
-    
+
 }
 #video-section p{
     font-size: 33px;
@@ -868,7 +868,7 @@ position: relative;
   #footer-section_menu{
       width: 39%;
   }
-  #video-section h1, 
+  #video-section h1,
   #reward-section h1,
   #program h1{
       font-size: 2rem;

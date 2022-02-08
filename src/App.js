@@ -29,25 +29,25 @@ class App extends React.Component {
         responsiveWidth={800}
         afterLoad={(origin, destination, direction) => {
           console.log("afterLoad event", { origin, destination, direction });
-          if(destination.index === 0 || destination.index === 1){
+          if (destination.index === 0 || destination.index === 1) {
             window.fullpage_api.fadingEffect.turnOff();
-          }if(destination.index === 2 || destination.index === 3 || 
-            destination.index === 4 || destination.index === 5 
-            ||destination.index === 6){
+          } if (destination.index === 2 || destination.index === 3 ||
+            destination.index === 4 || destination.index === 5
+            || destination.index === 6) {
             window.fullpage_api.fadingEffect.turnOn();
-          }else{
+          } else {
             window.fullpage_api.fadingEffect.turnOff();
           }
         }}
 
-        afterResponsive={(isResponsive) =>{
+        afterResponsive={(isResponsive) => {
           window.fullpage_api.fadingEffect.turnOff();
         }}
 
         render={({ state, fullpage_api }) => {
 
           return (
-            
+
             <div id="fullpage-wrapper">
 
               <Banner />
@@ -55,7 +55,7 @@ class App extends React.Component {
               <Program />
               <Video />
               <VideoTwo />
-              <VideoThree /> 
+              <VideoThree />
               <VideoFour />
               <Reward />
               <Quote />

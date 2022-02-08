@@ -1,5 +1,7 @@
 {
   "cSpell.words": [
     "Fullpage"
-  ]
+  ],
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false
 }
