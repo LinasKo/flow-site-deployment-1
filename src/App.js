@@ -21,10 +21,12 @@ import Contact from "./components/Contact";
 class App extends React.Component {
 
   render() {
+    const FULL_PAGE_LICENSE_KEY = process.env.REACT_APP_FULL_PAGE_LICENSE_KEY;
+
     return (
       <ReactFullpage
 
-        licenseKey={"1D2C3363-9E204A14-B69CBB27-FE85CA55"}
+        licenseKey={FULL_PAGE_LICENSE_KEY}
         fadingEffect
         responsiveWidth={800}
         afterLoad={(origin, destination, direction) => {
