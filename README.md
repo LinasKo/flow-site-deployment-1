@@ -1,3 +1,13 @@
+# LetsFlow Demo Website
+
+## Installation
+There's a compiler error related to a missing plugin in `fullpage`.\
+To remove it, go to `extra`, and copy `scrolloverflow.min.js.map` there to `node_modules/@fullpage/dist/`
+
+Note: it's not ideal - check if this clears up when we get the license.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
