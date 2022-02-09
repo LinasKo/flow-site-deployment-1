@@ -57,7 +57,7 @@ const Banner = () => {
           </div>
 
           <div className='col-xxl-6 col-md-6 banner-section_right'>
-            <div className='banner-image'>
+            <div className='banner-image' onClick={() => alert("Hmm")}>
               <img src={hero} alt='Hero section pic' className='img-fluid' />
             </div>
             <div className='voice'>

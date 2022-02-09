@@ -224,6 +224,9 @@
 }
 .banner-image{
   padding-top: 70px;
+
+  /* TODO: remove when game is started in another way */
+  cursor: pointer;
 }
 .voice {
   width: 73%;

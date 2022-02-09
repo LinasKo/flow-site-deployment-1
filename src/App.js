@@ -1,4 +1,11 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
 import ReactFullpage from '@fullpage/react-fullpage';
 
 import Banner from './components/Banner'
@@ -24,48 +31,61 @@ class App extends React.Component {
     const FULL_PAGE_LICENSE_KEY = process.env.REACT_APP_FULL_PAGE_LICENSE_KEY;
 
     return (
-      <ReactFullpage
+      <Router>
+        <Routes>
+          <Route path="/play">
+            This is the Game! Hah!
+          </Route>
+          <Route path="/" element={
+            <ReactFullpage
 
-        licenseKey={FULL_PAGE_LICENSE_KEY}
-        fadingEffect
-        responsiveWidth={800}
-        afterLoad={(origin, destination, direction) => {
-          console.log("afterLoad event", { origin, destination, direction });
-          if (destination.index === 0 || destination.index === 1) {
-            window.fullpage_api.fadingEffect.turnOff();
-          } if (destination.index === 2 || destination.index === 3 ||
-            destination.index === 4 || destination.index === 5
-            || destination.index === 6) {
-            window.fullpage_api.fadingEffect.turnOn();
-          } else {
-            window.fullpage_api.fadingEffect.turnOff();
-          }
-        }}
+              licenseKey={FULL_PAGE_LICENSE_KEY}
+              fadingEffect
+              responsiveWidth={800}
+              afterLoad={(origin, destination, direction) => {
+                console.log("afterLoad event", { origin, destination, direction });
+                if (destination.index === 0 || destination.index === 1) {
+                  window.fullpage_api.fadingEffect.turnOff();
+                } if (destination.index === 2 || destination.index === 3 ||
+                  destination.index === 4 || destination.index === 5
+                  || destination.index === 6) {
+                  window.fullpage_api.fadingEffect.turnOn();
+                } else {
+                  window.fullpage_api.fadingEffect.turnOff();
+                }
+              }}
 
-        afterResponsive={(isResponsive) => {
-          window.fullpage_api.fadingEffect.turnOff();
-        }}
+              afterResponsive={(isResponsive) => {
+                window.fullpage_api.fadingEffect.turnOff();
+              }}
 
-        render={({ state, fullpage_api }) => {
+              render={({ state, fullpage_api }) => {
 
-          return (
+                return (
 
-            <div id="fullpage-wrapper">
+                  <div id="fullpage-wrapper">
 
-              <Banner />
-              <Question />
-              <Program />
-              <Video />
-              <VideoTwo />
-              <VideoThree />
-              <VideoFour />
-              <Reward />
-              <Quote />
-              <Contact />
-            </div>
-          );
-        }}
-      />
+                    <Banner />
+                    <Question />
+                    <Program />
+                    <Video />
+                    <VideoTwo />
+                    <VideoThree />
+                    <VideoFour />
+                    <Reward />
+                    <Quote />
+                    <Contact />
+                  </div>
+                );
+              }}
+            />
+          }>
+
+
+          </Route>
+
+        </Routes>
+      </Router>
     );
   }
 }
