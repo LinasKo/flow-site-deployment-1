@@ -1,9 +1,9 @@
 import React from 'react';
 import lottie from "lottie-web";
 
-import hero from './assets/hero_section_pic.png'
-import stars from './assets/stars.png';
-import soundAnimation from './assets/animation/sound-wave.json'
+import hero from '../assets/hero_section_pic.png'
+import stars from '../assets/stars.png';
+import soundAnimation from '../assets/animation/sound-wave.json'
 import Header from './Header';
 
 

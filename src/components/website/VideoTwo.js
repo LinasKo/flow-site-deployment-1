@@ -1,16 +1,16 @@
 import React from "react";
-import flow_1 from './assets/animation/flow_1.mp4';
+import womenVideo from '../assets/animation/women_video.mp4';
 
 
-const VideoThree = () => {
+const VideoTwo = () => {
   return (
-    <div className='section fp-auto-height-responsive' id='video-section-three'>
+    <div className='section fp-auto-height-responsive' id='video-section-two'>
       <div className='container'>
         <div className='row'>
-          <div className='video-section__video__three'>
+          <div className='video-section__video__two'>
             <video
               className='women-video'
-              src={flow_1}
+              src={womenVideo}
               autoPlay
               muted
               loop
@@ -23,4 +23,4 @@ const VideoThree = () => {
   );
 }
 
-export default VideoThree;
+export default VideoTwo;

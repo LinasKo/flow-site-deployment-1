@@ -8,16 +8,16 @@ import {
 
 import ReactFullpage from '@fullpage/react-fullpage';
 
-import Banner from './components/Banner'
-import Question from './components/Question'
-import Program from "./components/Program";
-import Video from "./components/Video";
-import VideoTwo from './components/VideoTwo';
-import VideoThree from './components/VideoThree';
-import VideoFour from './components/VideoFour';
-import Reward from "./components/Reward";
-import Quote from "./components/Quote";
-import Contact from "./components/Contact";
+import Banner from './components/website/Banner'
+import Question from './components/website/Question'
+import Program from "./components/website/Program";
+import Video from "./components/website/Video";
+import VideoTwo from './components/website/VideoTwo';
+import VideoThree from './components/website/VideoThree';
+import VideoFour from './components/website/VideoFour';
+import Reward from "./components/website/Reward";
+import Quote from "./components/website/Quote";
+import Contact from "./components/website/Contact";
 
 // NOTE: if using fullpage extensions/plugins put them here and pass it as props
 /*const pluginWrapper = () => {

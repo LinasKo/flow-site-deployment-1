@@ -1,5 +1,5 @@
 import React from "react";
-import flow_2 from './assets/animation/flow_2.mp4';
+import flow_2 from '../assets/animation/flow_2.mp4';
 
 
 const VideoFour = () => {

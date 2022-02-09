@@ -1,5 +1,5 @@
 import React from "react";
-import mobile from './assets/animation/mobile.mp4'
+import mobile from '../assets/animation/mobile.mp4'
 
 
 const Program = () => {

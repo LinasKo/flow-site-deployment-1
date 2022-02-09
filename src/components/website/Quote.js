@@ -1,8 +1,8 @@
 import React from "react";
 import MailchimpForm from "./MailchimpForm";
 
-import firstImg from './assets/1.png';
-import firstImgRight from './assets/2.png';
+import firstImg from '../assets/1.png';
+import firstImgRight from '../assets/2.png';
 
 
 const Quote = () => {

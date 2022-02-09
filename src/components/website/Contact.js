@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import emailjs, { init } from 'emailjs-com';
 
 
-import app_store from './assets/app_store.png';
-import play_store from './assets/play_store.png';
-import mobile from './assets/two_mobiles.png';
+import app_store from '../assets/app_store.png';
+import play_store from '../assets/play_store.png';
+import mobile from '../assets/two_mobiles.png';
 
 const Contact = () => {
   // Contact us form to send message using mailjs.com

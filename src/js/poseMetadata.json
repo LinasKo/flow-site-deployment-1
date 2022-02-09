@@ -1,0 +1,93 @@
+{
+  "chair": {
+    "angles": {
+      "left_elbow": 160,
+      "left_hip": 60,
+      "left_knee": 180,
+      "left_shoulder": 180,
+      "right_elbow": 160,
+      "right_hip": 60,
+      "right_knee": 180,
+      "right_shoulder": 180,
+      "torso": 0
+    }
+  },
+  "cobra": {
+    "angles": {
+      "left_elbow": 120,
+      "left_hip": 150,
+      "left_knee": 180,
+      "left_shoulder": 30,
+      "right_elbow": 120,
+      "right_hip": 150,
+      "right_knee": 180,
+      "right_shoulder": 30,
+      "torso": 0
+    }
+  },
+  "dog": {
+    "angles": {
+      "left_elbow": 150,
+      "left_hip": 90,
+      "left_knee": 180,
+      "left_shoulder": 150,
+      "right_elbow": 150,
+      "right_hip": 90,
+      "right_knee": 180,
+      "right_shoulder": 150,
+      "torso": 0
+    }
+  },
+  "highknee": {
+    "angles": {
+      "left_elbow": 120,
+      "left_hip": 90,
+      "left_knee": 90,
+      "left_shoulder": 90,
+      "right_elbow": 120,
+      "right_hip": 90,
+      "right_knee": 180,
+      "right_shoulder": 90,
+      "torso": 0
+    }
+  },
+  "tpose": {
+    "angles": {
+      "left_elbow": 120,
+      "left_hip": 180,
+      "left_knee": 180,
+      "left_shoulder": 90,
+      "right_elbow": 120,
+      "right_hip": 180,
+      "right_knee": 180,
+      "right_shoulder": 90,
+      "torso": 0
+    }
+  },
+  "tree": {
+    "angles": {
+      "left_elbow": 120,
+      "left_hip": 150,
+      "left_knee": 150,
+      "left_shoulder": 120,
+      "right_elbow": 120,
+      "right_hip": 120,
+      "right_knee": 30,
+      "right_shoulder": 90,
+      "torso": 0
+    }
+  },
+  "warrior": {
+    "angles": {
+      "left_elbow": 150,
+      "left_hip": 90,
+      "left_knee": 150,
+      "left_shoulder": 120,
+      "right_elbow": 150,
+      "right_hip": 180,
+      "right_knee": 180,
+      "right_shoulder": 90,
+      "torso": 30
+    }
+  }
+}

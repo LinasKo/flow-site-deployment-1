@@ -1,8 +1,8 @@
 import React from "react";
 import lottie from "lottie-web";
 
-import reward from './assets/reward_mobile.png';
-import celebrate from './assets/animation/celebrate.json'
+import reward from '../assets/reward_mobile.png';
+import celebrate from '../assets/animation/celebrate.json'
 
 const Reward = () => {
   // for wave json file

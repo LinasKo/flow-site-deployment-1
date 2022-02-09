@@ -1,0 +1,1 @@
+`poseMetadata.json` stores configurable settings, related to each pose. For now, it is only a collection of hardcoded angles, between the limbs.
