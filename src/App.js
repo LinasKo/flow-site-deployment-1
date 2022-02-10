@@ -2,10 +2,10 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
+import MockLandingPage from './components/game/MockLandingPage';
 import ReactFullpage from '@fullpage/react-fullpage';
 
 import Banner from './components/website/Banner'
@@ -33,9 +33,7 @@ class App extends React.Component {
     return (
       <Router>
         <Routes>
-          <Route path="/play">
-            This is the Game! Hah!
-          </Route>
+          <Route path="/play" element={<MockLandingPage />} />
           <Route path="/" element={
             <ReactFullpage
 
@@ -79,11 +77,7 @@ class App extends React.Component {
                 );
               }}
             />
-          }>
-
-
-          </Route>
-
+          } />
         </Routes>
       </Router>
     );

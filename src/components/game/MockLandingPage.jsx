@@ -3,36 +3,36 @@ import { useRef, useEffect, useState } from 'react';
 import { Pose } from "@mediapipe/pose";
 import { Camera } from "@mediapipe/camera_utils";
 
-import ConfigsPane, {
-  DEFAULT_TARGET_POSE,
-
-  DEFAULT_COLOR_BASE,
-  DEFAULT_THICKNESS_CONNECTOR,
-  DEFAULT_THICKNESS_CIRCLE_OUTER,
-
-  DEFAULT_COLOR_MIDDLE,
-  DEFAULT_COLOR_LEFT,
-  DEFAULT_COLOR_RIGHT,
-  DEFAULT_THICKNESS_CIRCLE_INNER,
-
-  DEFAULT_COLOR_SEGMENTATION,
-  DEFAULT_COLOR_GOOD,
-  DEFAULT_COLOR_BAD,
-  DEFAULT_COLOR_GRADED_BASE,
-  DEFAULT_THICKNESS_GRADED
-} from './ConfigsPane';
-import { makeFullEmbedding } from '../pose-tracking/poseEmbedder';
-import { jointScores } from '../pose-tracking/poseFeedback';
+import { makeFullEmbedding } from '../../js/poseEmbedder';
+import { jointScores } from '../../js/poseFeedback';
 import {
   drawWithSegmentation,
   drawSimpleImage,
   drawConnections,
   drawPoints,
   drawScores
-} from '../pose-tracking/poseVisuals';
+} from '../../js/poseVisuals';
 
 import './MockLandingPage.css';
 
+
+const AVAILABLE_POSES = ["chair", "cobra", "dog", "highknee", "tpose", "tree", "warrior"];
+const DEFAULT_TARGET_POSE = "chair";
+
+const DEFAULT_COLOR_BASE = '#FFFFFFA0';
+const DEFAULT_THICKNESS_CONNECTOR = 4;
+const DEFAULT_THICKNESS_CIRCLE_OUTER = 10;
+
+const DEFAULT_COLOR_MIDDLE = '#BBBBBB';
+const DEFAULT_COLOR_LEFT = '#6464FF';
+const DEFAULT_COLOR_RIGHT = '#FF6400';
+const DEFAULT_THICKNESS_CIRCLE_INNER = 7;
+
+const DEFAULT_COLOR_SEGMENTATION = '#00008888';
+const DEFAULT_COLOR_GOOD = "#00FF00";
+const DEFAULT_COLOR_BAD = "#FF0000";
+const DEFAULT_COLOR_GRADED_BASE = '#BBBBBB00';
+const DEFAULT_THICKNESS_GRADED = 6;
 
 const ENABLE_SEGMENTATION = false;
 const FLIP_VIDEO = true;
@@ -159,9 +159,6 @@ export default function MockLandingPage() {
           {isPlaying && <button ref={stopButtonRef} onClick={() => toggleStream(false)}>Stahp</button>}
           {!isPlaying && <button ref={startButtonRef} onClick={() => toggleStream(true)}>Geht mal, bitte schon.</button>}
         </div>
-
-        <ConfigsPane setDrawingConfigs={(configs) => drawingConfigs.current = configs} />
-
       </div>
     </div>
   );
