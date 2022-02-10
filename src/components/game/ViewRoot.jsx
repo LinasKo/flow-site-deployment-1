@@ -13,7 +13,7 @@ import { useRef, useEffect, useState } from 'react';
 //   drawScores
 // } from '../../js/poseVisuals';
 
-import './ViewRoot.css';
+import './ViewRoot.scss';
 
 import ViewIntro from './ViewIntro';
 import ViewCalib from './ViewCalib';

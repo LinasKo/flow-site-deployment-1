@@ -4,6 +4,9 @@ import downdogTutorialVideo from '../assets/videos/downdog-tutorial.mp4';
 import chaturangaTutorialVideo from '../assets/videos/chaturanga-tutorial.mp4';
 import updogTutorialVideo from '../assets/videos/updog-tutorial.mp4';
 
+import './ViewGame.scss';
+
+
 const POSES = [
   {
     id: "downdog",

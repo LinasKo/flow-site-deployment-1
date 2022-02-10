@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import './ViewCalib.css';
+import './ViewCalib.scss';
 
 
 export default function ViewCalib({ cbCalibComplete }) {

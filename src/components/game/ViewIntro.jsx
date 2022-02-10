@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import introVideo from "../assets/videos/CAT-intro.mp4";
-import './ViewIntro.css';
+import './ViewIntro.scss';
 
 
 const IntroStage = {
