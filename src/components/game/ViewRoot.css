@@ -1,0 +1,42 @@
+.root {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+
+  flex-grow: 1;
+  padding-top: 2rem;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.videoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+video.inputVideo {
+  display: none;
+}
+
+div.videoMock {
+  width: 1280px;
+  height: 720px;
+  background-color: green;
+}
+
+button {
+  margin-top: 1.5rem;
+  font-size: 30px;
+}
+
+div.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

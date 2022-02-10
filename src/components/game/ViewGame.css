@@ -1,4 +1,7 @@
-div.landingPage {
+/* div.gameRoot {
+  width: 100vw;
+  height: 100vh;
+
   flex-grow: 1;
   padding-top: 2rem;
   box-sizing: border-box;
@@ -35,4 +38,4 @@ div.row {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-}
+} */

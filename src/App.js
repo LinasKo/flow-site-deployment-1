@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 
-import MockLandingPage from './components/game/MockLandingPage';
+import ViewRoot from './components/game/ViewRoot';
 import ReactFullpage from '@fullpage/react-fullpage';
 
 import Banner from './components/website/Banner'
@@ -33,7 +33,7 @@ class App extends React.Component {
     return (
       <Router>
         <Routes>
-          <Route path="/play" element={<MockLandingPage />} />
+          <Route path="/play" element={<ViewRoot />} />
           <Route path="/" element={
             <ReactFullpage
 
