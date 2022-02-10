@@ -67,7 +67,7 @@ export default function ViewRoot() {
 
 
   return (
-    <div className="root" ref={rootRef}>
+    <div className="gameContainer" ref={rootRef}>
       {(gameStage === GameStage.PRE_START || gameStage === GameStage.INTRO) && (
         <ViewIntro cbEmailSubmit={onSubmitEmail} cbStart={onClickStart} />
       )}

@@ -1,11 +1,7 @@
-.root {
+.gameContainer {
   width: 100vw;
   height: 100vh;
   background-color: white;
-
-  flex-grow: 1;
-  padding-top: 2rem;
-  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;

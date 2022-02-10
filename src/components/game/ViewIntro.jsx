@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import introVideo from "../assets/videos/CAT-intro.mp4";
+import introVideo from "../assets/videos/cat-weugh.mp4";
 import './ViewIntro.scss';
 
 
@@ -39,8 +39,8 @@ export default function ViewIntro({ cbStart, cbEmailSubmit }) {
           <video ref={videoRef} autoPlay={"autoplay"} src={introVideo} />
 
           <div className="emailForm">
-            <input ref={emailInRef} type="email" placeholder="Email" />
-            <button onClick={onEmailSubmit}>Let's Go</button>
+            <input ref={emailInRef} type="email" placeholder="Enter your email..." />
+            <button onClick={onEmailSubmit}>Let's Start</button>
           </div>
         </>
       )}

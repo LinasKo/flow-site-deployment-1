@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 
-import downdogTutorialVideo from '../assets/videos/downdog-tutorial.mp4';
-import chaturangaTutorialVideo from '../assets/videos/chaturanga-tutorial.mp4';
-import updogTutorialVideo from '../assets/videos/updog-tutorial.mp4';
+import downdogTutorialVideo from '../assets/videos/bad-kungfu-2.mp4';
+import chaturangaTutorialVideo from '../assets/videos/bad-kungfu-3.mp4';
+import updogTutorialVideo from '../assets/videos/bad-kungfu-4.mp4';
 
 import './ViewGame.scss';
 
