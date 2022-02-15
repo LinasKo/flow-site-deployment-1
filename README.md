@@ -1,10 +1,33 @@
 # LetsFlow Demo Website
 
 ## Installation
+
+#### 1. fullpage issues
 There's a compiler error related to a missing plugin in `fullpage`.\
 To remove it, go to `extra`, and copy `scrolloverflow.min.js.map` there to `node_modules/@fullpage/dist/`
 
 Note: it's not ideal - check if this clears up when we get the license.
+
+#### 2. HTTPS
+`navigator.mediaInfo.Something` isn't available on the phones, if not accessed via HTTP.
+Solution: set up a cert authority on the PC, make a cert. Even if it's not accepted by Android, it still requests camera permissions :)
+
+How:
+```bash
+# Set up authority:
+# 1. Install mkcert
+# 2. Run:
+mkdir -p .cert
+mkcert -key-file ./.cert/key.pem -cert-file ./.cert/cert.pem "localhost"
+
+# Start with:
+HTTPS=true SSL_CRT_FILE=./.cert/cert.pem SSL_KEY_FILE=./.cert/key.pem npm start
+
+# Or just:
+npm run start-https
+```
+
+
 
 ---
 
