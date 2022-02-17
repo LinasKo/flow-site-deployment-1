@@ -1,6 +1,7 @@
 import { cloneDeep } from 'lodash';
 
 import { LANDMARK_NAMES, LINKS, JOINTS } from "./poseConstants";
+import logger from "../js/logger";
 
 
 const VISIBILITY_TOLERANCE = 0.5;
@@ -16,7 +17,7 @@ const VISIBILITY_TOLERANCE = 0.5;
 export function makeFullEmbedding(poseDetResults) {
   // If detection fails, result can return an object with just "image" key.
   if (!("poseWorldLandmarks" in poseDetResults)) {
-    console.warn("Failed to detect pose");
+    logger.warn("Failed to detect pose");
     return null;
   }
 
@@ -32,7 +33,7 @@ export function makeFullEmbedding(poseDetResults) {
     normalizeLinkLengths(lmDict, links);
   }
   catch (e) {
-    console.warn("Warning: links not normalized. Reason:  " + e.message);
+    logger.warn("Warning: links not normalized. Reason:  " + e.message);
   }
 
   return { "landmarks": lmDict, "links": links, "joints": joints };
@@ -48,13 +49,14 @@ export function makeLandmarkDict(poseDetResults) {
     landmarks[name]["xImg"] = landmarks2D[i]["x"];
     landmarks[name]["yImg"] = landmarks2D[i]["y"];
     landmarks[name]["zImg"] = landmarks2D[i]["z"];
+    landmarks[name]["visibility"] = landmarks2D[i]["visibility"];
     delete landmarks[i];
   }
 
   return landmarks;
 }
 
-function linkInfo(lmDict) {
+export function linkInfo(lmDict) {
   const distance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
 
   const links = {};

@@ -6,7 +6,7 @@ import './FancyLoader.scss'
 export default function FancyLoader() {
   return (
     <div>
-      <div class='loader loader3'>
+      <div className='loader loader3'>
         <div>
           <div>
             <div>

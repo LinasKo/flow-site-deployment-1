@@ -158,6 +158,32 @@ export function drawPoints(canvas, embedding, configs = null, flip = false) {
   ctx.restore();
 }
 
+/** A very basic function to just draw a connection between two landmarks */
+export function drawBasicConnection(canvas, landmark1, landmark2, opacity, flip = false) {
+  let { xImg: x0, yImg: y0 } = landmark1;
+  let { xImg: x1, yImg: y1 } = landmark2;
+  x0 *= canvas.width;
+  y0 *= canvas.height;
+  x1 *= canvas.width;
+  y1 *= canvas.height;
+  if (flip) {
+    x0 = canvas.width - x0;
+    x1 = canvas.width - x1;
+  }
+
+  const ctx = canvas.getContext("2d");
+  ctx.save();
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = opacity;
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.moveTo(x0, y0);
+  ctx.lineTo(x1, y1);
+  ctx.stroke();
+  ctx.restore();
+}
 
 export function drawScores(canvas, embedding, scores, configs = null, flip = false) {
   if (!embedding) return;
