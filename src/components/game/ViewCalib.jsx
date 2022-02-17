@@ -8,8 +8,8 @@ import {
   clearCanvas
 } from 'js/drawing';
 import { LANDMARK_NAMES } from 'js/poseConstants';
-import * as deviceTools from 'js/deviceTools';
 import ResponsiveCanvas from './ResponsiveCanvas';
+import FancyLoader from './FancyLoader';
 
 import './ViewCalib.scss';
 
@@ -31,7 +31,7 @@ const REQUIRED_VISIBLE = [
 console.assert(REQUIRED_VISIBLE.every((name) => LANDMARK_NAMES.includes(name)));
 
 const POSE_OPTS = {
-  modelComplexity: 1,
+  modelComplexity: 1,  // [0, 1, 2]
   smoothLandmarks: true,
   enableSegmentation: false,
   smoothSegmentation: false,
@@ -44,7 +44,6 @@ export default function ViewCalib({ cbCalibComplete }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [poseLockedIn, setPoseLockedIn] = useState(false);
-  const screenSize = deviceTools.getScreenSize();
 
   function isLandmarkVisible(poseEmbedding, lmName) {
     return poseEmbedding["landmarks"][lmName].visibility > VISIBILITY_THRESH;
@@ -92,18 +91,9 @@ export default function ViewCalib({ cbCalibComplete }) {
           cbCalibComplete(embedding);
         }
       }
-
-      // // Debug
-      // const screenSize = deviceTools.getScreenSize();
-      // const nativeRes = deviceTools.getNativeResolution();
-      // const debugText = JSON.stringify({
-      //   screenSize, nativeRes
-      // }, null, 4);
-      // drawText(canvasRef.current, debugText);
     }
 
     // Init pose tracker
-    console.log("Initialising pose 1");
     const pose = new Pose({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
@@ -111,22 +101,6 @@ export default function ViewCalib({ cbCalibComplete }) {
     });
     pose.setOptions(POSE_OPTS);
     pose.onResults(onPoseResult);
-
-    // const invisImgElem = document.createElement('video');
-    // invisImgElem.src = imgCamPlaceholder;
-    // try {
-    //   pose.send({ image: video });
-    // } catch (e) {
-    //   console.error(e);
-    // }
-
-    // console.log("Initialising pose 1");
-    // pose.initialize()
-    //   .then(() => {
-    //     console.log("Pose initialised");
-    //     new Promise(resolve => setTimeout(resolve, 2000));
-    //   })
-
 
     // Start Camera
     const camera = new Camera(video, {
@@ -151,6 +125,12 @@ export default function ViewCalib({ cbCalibComplete }) {
 
   return (
     <div className="calibRoot">
+      <div className="loaderPane">
+        <h1>Loading...</h1>
+
+        <FancyLoader />
+      </div>
+
       <video className="inputVideo" ref={videoRef}></video>
       <ResponsiveCanvas canvasRef={canvasRef} idealAspect={IDEAL_ASPECT} />
       {/* <canvas className="outputCanvas" ref={canvasRef} width={screenSize[1]} height={screenSize[0]}></canvas> */}
