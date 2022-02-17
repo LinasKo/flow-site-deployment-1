@@ -225,6 +225,29 @@ export function drawScores(canvas, embedding, scores, configs = null, flip = fal
   ctx.restore();
 }
 
+export function drawText(canvas, text) {
+  const ctx = canvas.getContext("2d");
+  ctx.save();
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.font = "20px Arial";
+  ctx.fillStyle = "red";
+  ctx.fillText(text, 20, 20);
+
+  ctx.restore();
+}
+
+export function clearCanvas(canvas) {
+  const ctx = canvas.getContext("2d");
+  ctx.save();
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.restore();
+}
+
 /** Convert a number between 0 (GOOD) and 1 (BAD) to RGB color value */
 function rateToRGB(errorRate, configs = null) {
   // To HSV

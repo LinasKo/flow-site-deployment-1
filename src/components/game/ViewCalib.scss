@@ -5,14 +5,39 @@
   justify-content: center;
 
   .outputCanvas {
-    width: 100vw;
-  }
-
-  .infoText {
+    // width: 100vw;
+    height: 90vh;
     position: absolute;
+    top: 0;
+    z-index: -1;
   }
 
   .personUi {
-    position: absolute;
+    min-width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .infoText {
+      min-height: 20%;
+
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      flex-grow: 1;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    .stateText {
+      position: absolute;
+    }
   }
 }

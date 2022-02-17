@@ -37,19 +37,16 @@ export default function ViewGame({ cbGameComplete }) {
     } else {
       const nextPose = POSES[poseIndex + 1];
       setButtonText(`Next: ${nextPose.name}`);
-      console.log("Showing pose:", nextPose.name);
     }
   }, [poseIndex]);
 
   function onClickNext() {
-    console.log("Leaving", yogaPoseRef.current.name);
     if (poseIndex === POSES.length - 1) {
       cbGameComplete();
     } else {
       setPoseIndex(poseIndex + 1);
       yogaPoseRef.current = POSES[poseIndex + 1];
     }
-    console.log(`New pose: ${yogaPoseRef.current.name}`);
   }
 
   return (
