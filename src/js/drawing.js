@@ -1,6 +1,7 @@
 import { drawLandmarks, drawConnectors } from "@mediapipe/drawing_utils";
 import { POSE_CONNECTIONS } from "@mediapipe/pose";
 import { clamp } from "lodash";
+import canvasTxt from "canvas-txt"
 
 
 /* Notes:
@@ -256,9 +257,12 @@ export function drawText(canvas, text) {
   ctx.save();
 
   ctx.globalCompositeOperation = 'source-over';
-  ctx.font = "20px Arial";
-  ctx.fillStyle = "red";
-  ctx.fillText(text, 20, 20);
+  ctx.fillStyle = "#ff4400";
+  canvasTxt.fontSize = 20;
+  canvasTxt.align = "left";
+  canvasTxt.font = "Courier New";
+  canvasTxt.fontWeight = "50";
+  canvasTxt.drawText(ctx, text, 20, 20, canvas.width - 20, canvas.height - 20)
 
   ctx.restore();
 }

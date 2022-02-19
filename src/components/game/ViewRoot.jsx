@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 // import { Pose } from "@mediapipe/pose";
 // import { Camera } from "@mediapipe/camera_utils";
@@ -31,9 +31,9 @@ const GameStage = {
 
 export default function ViewRoot() {
   const rootRef = useRef(null);
-
   const [gameStage, setGameStage] = useState(GameStage.PRE_START);
 
+  /** Request the app to go into fullscreen */
   function requestFullscreen() {
     const elem = rootRef.current;
     if (elem.requestFullscreen) {
@@ -45,6 +45,7 @@ export default function ViewRoot() {
     }
   }
 
+  // Buttons
   function onClickStart() {
     requestFullscreen();
     setGameStage(GameStage.INTRO);
@@ -65,7 +66,7 @@ export default function ViewRoot() {
     setGameStage(GameStage.FEEDBACK);
   }
 
-
+  // Render
   return (
     <div className="gameContainer" ref={rootRef}>
       {(gameStage === GameStage.PRE_START || gameStage === GameStage.INTRO) && (

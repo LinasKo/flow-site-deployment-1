@@ -6,13 +6,16 @@ import { makeFullEmbedding, makeLandmarkDict, linkInfo } from 'js/poseEmbedder';
 import {
   drawSimpleImage,
   clearCanvas,
-  drawBasicConnection
+  drawBasicConnection,
+  drawText
 } from 'js/drawing';
 import { LANDMARK_NAMES } from 'js/poseConstants';
 import ResponsiveCanvas from './ResponsiveCanvas';
 import FancyLoader from './FancyLoader';
 
+import { PoseValidator } from 'js/poseValidator';
 import { clamp } from 'js/utils';
+import { isEmpty } from 'lodash';
 
 import './ViewCalib.scss';
 
@@ -21,6 +24,8 @@ const IDEAL_VID_H = 1080;
 const IDEAL_ASPECT = IDEAL_VID_W / IDEAL_VID_H;
 
 const VISIBILITY_THRESH = 0.25;
+const MAX_VALIDATION_TIME_S = 20;
+const WAIT_BEFORE_NEXT_S = 10.0;
 
 /**
  * Lets fade in pose connections one at a time.
@@ -53,6 +58,7 @@ const FADE_BREAKPOINTS = [
   [11, 13, ["left_hip", "left_knee"]],
   [11, 13, ["left_shoulder", "left_hip"]],
 ]
+const MAX_FADE_TIME_S = Math.max(...FADE_BREAKPOINTS.map(bp => bp[1]));
 
 /** Subset of LANDMARK_NAMES */
 const REQUIRED_VISIBLE = [
@@ -80,21 +86,7 @@ export default function ViewCalib({ cbCalibComplete }) {
   const canvasRef = useRef(null);
   const [poseLockedIn, setPoseLockedIn] = useState(false);
   const videoStartedAtRef = useRef(null);
-
-  function isLandmarkVisible(poseEmbedding, lmName) {
-    return poseEmbedding["landmarks"][lmName].visibility > VISIBILITY_THRESH;
-  }
-
-  function isPoseVisible(poseEmbedding) {
-    for (const lmName of REQUIRED_VISIBLE) {
-      if (isLandmarkVisible(poseEmbedding, lmName)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // TODO: pose stability?
+  const poseValidatorRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -106,10 +98,10 @@ export default function ViewCalib({ cbCalibComplete }) {
       // Partial embedding
       const landmarks = makeLandmarkDict(poseDetResults)
 
-      // Draw
       console.assert(videoStartedAtRef.current !== null);
       const timeS = new Date().getTime() / 1000;
 
+      // Draw
       for (const [startS, endS, [lm1name, lm2name]] of FADE_BREAKPOINTS) {
         const lm1 = landmarks[lm1name];
         const lm2 = landmarks[lm2name];
@@ -117,32 +109,57 @@ export default function ViewCalib({ cbCalibComplete }) {
         const dur = timeS - videoStartedAtRef.current - startS;
 
         const alpha = clamp(dur / (endS - startS), 0.0, 1.0);
-        console.log("hmm", dur, endS - startS);
         drawBasicConnection(canvas, lm1, lm2, alpha, true);
       }
     }
 
+    function validatePose(poseDetResults) {
+      if (!poseDetResults || !poseDetResults.poseWorldLandmarks) return;
+
+      console.assert(videoStartedAtRef.current !== null);
+      console.assert(poseValidatorRef.current !== null);
+      const timeS = new Date().getTime() / 1000;
+
+      // Validate
+      if (timeS > videoStartedAtRef.current + MAX_FADE_TIME_S) {
+        console.log("Validating!");
+        const landmarks = makeLandmarkDict(poseDetResults)
+
+        const validErrors = poseValidatorRef.current.validatePose(landmarks);
+        if (isEmpty(validErrors)) {
+          setPoseLockedIn(true);
+        } else {
+          drawText(canvasRef.current, JSON.stringify(validErrors, null, 4));
+        }
+      }
+
+      // Accept any validation
+      if (timeS > videoStartedAtRef.current + MAX_FADE_TIME_S + MAX_VALIDATION_TIME_S) {
+        setPoseLockedIn(true);
+      }
+    }
+
     function onPoseResult(results) {
+      if (!canvasRef.current) return;  // Calib done
+
       clearCanvas(canvasRef.current);
       drawSimpleImage(canvasRef.current, results.image, true);
 
       if (videoStartedAtRef.current === null) {
         videoStartedAtRef.current = new Date().getTime() / 1000;
-        console.log("Started Video");
+        poseValidatorRef.current = new PoseValidator();
       }
 
       // Draw pose
       fadeInPose(results);
+      if (poseLockedIn) {
+        drawText(canvasRef.current, "Pose locked in!");
+      }
 
-      // if (!poseLockedIn) {
-      //   const embedding = makeFullEmbedding(results);
-
-      //   if (!embedding) return;
-      //   if (isPoseVisible(embedding)) {
-      //     setPoseLockedIn(true);
-      //     cbCalibComplete(embedding);
-      //   }
-      // }
+      // Validate
+      if (!poseLockedIn) {
+        validatePose(results);
+      }
     }
 
     // Init pose tracker
@@ -168,6 +185,15 @@ export default function ViewCalib({ cbCalibComplete }) {
     return () => {
       camera.stop();
       pose.close();
+    }
+  }, [poseLockedIn]);
+
+  // Wait and transition to next view
+  useEffect(() => {
+    if (poseLockedIn) {
+      setTimeout(() => {
+        cbCalibComplete();
+      }, WAIT_BEFORE_NEXT_S);
     }
   }, [cbCalibComplete, poseLockedIn]);
 
