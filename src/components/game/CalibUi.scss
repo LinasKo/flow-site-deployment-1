@@ -1,0 +1,40 @@
+.calibUi {
+  min-width: 100vw;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .topText, .bottomText {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .topText {
+    position: absolute;
+    top: min(80px, 20%);
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  img {
+    pointer-events: none;
+    opacity: 0.75;
+
+    position: absolute;
+    top: min(100px, 20%);
+    bottom: min(100px, 20%);
+    height: 100%;
+    width: 110%;
+  }
+
+  .bottomText {
+    position: absolute;
+    top: 175px;
+  }
+}

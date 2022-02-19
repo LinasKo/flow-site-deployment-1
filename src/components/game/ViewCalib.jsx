@@ -6,16 +6,16 @@ import { makeFullEmbedding, makeLandmarkDict, linkInfo } from 'js/poseEmbedder';
 import {
   drawSimpleImage,
   clearCanvas,
-  drawBasicConnection,
-  drawText
+  drawBasicConnection
 } from 'js/drawing';
 import { LANDMARK_NAMES } from 'js/poseConstants';
 import ResponsiveCanvas from './ResponsiveCanvas';
 import FancyLoader from './FancyLoader';
+import CalibUi from './CalibUi';
 
 import { PoseValidator } from 'js/poseValidator';
 import { clamp } from 'js/utils';
-import { isEmpty } from 'lodash';
+import { isEmpty, has } from 'lodash';
 
 import './ViewCalib.scss';
 
@@ -23,9 +23,14 @@ const IDEAL_VID_W = 1920;
 const IDEAL_VID_H = 1080;
 const IDEAL_ASPECT = IDEAL_VID_W / IDEAL_VID_H;
 
-const VISIBILITY_THRESH = 0.25;
 const MAX_VALIDATION_TIME_S = 20;
-const WAIT_BEFORE_NEXT_S = 10.0;
+const WAIT_BEFORE_NEXT_S = 5.0;
+
+const TOP_TEXT_VALIDATION = "Fixing stance";
+const BOT_TEXT_VALIDATION = "Make sure your body is visible";
+const BOT_TEXT_SUCCESS = "We're all set!";
+const BOT_TEXT_TIMEOUT = "We're all set!";
+
 
 /**
  * Lets fade in pose connections one at a time.
@@ -84,12 +89,37 @@ const POSE_OPTS = {
 export default function ViewCalib({ cbCalibComplete }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [poseLockedIn, setPoseLockedIn] = useState(false);
+  const calibCompleteRef = useRef(false);
   const videoStartedAtRef = useRef(null);
   const poseValidatorRef = useRef(null);
 
+  /** Call UI functions without updating parent (ViewCalib) */
+  const calibUiEvents = {};
+
   useEffect(() => {
     const video = videoRef.current;
+    console.assert(has(calibUiEvents, 'setTopText'));
+    console.assert(has(calibUiEvents, 'setBottomText'));
+    console.assert(has(calibUiEvents, 'setShowFrame'));
+
+    function onCalibSuccess() {
+      calibCompleteRef.current = true;
+      calibUiEvents.setBottomText(BOT_TEXT_SUCCESS);
+
+      setTimeout(() => {
+        cbCalibComplete();
+      }, WAIT_BEFORE_NEXT_S * 1000);
+    }
+
+    function onCalibTimeout() {
+      calibCompleteRef.current = true;
+      calibUiEvents.setBottomText(BOT_TEXT_TIMEOUT);
+
+      setTimeout(() => {
+        cbCalibComplete();
+      }, WAIT_BEFORE_NEXT_S * 1000);
+    }
+
     function fadeInPose(poseDetResults) {
       if (!poseDetResults || !poseDetResults.poseWorldLandmarks) return;
 
@@ -122,20 +152,17 @@ export default function ViewCalib({ cbCalibComplete }) {
 
       // Validate
       if (timeS > videoStartedAtRef.current + MAX_FADE_TIME_S) {
-        console.log("Validating!");
         const landmarks = makeLandmarkDict(poseDetResults)
 
         const validErrors = poseValidatorRef.current.validatePose(landmarks);
         if (isEmpty(validErrors)) {
-          setPoseLockedIn(true);
-        } else {
-          drawText(canvasRef.current, JSON.stringify(validErrors, null, 4));
+          onCalibSuccess();
         }
       }
 
-      // Accept any validation
+      // Timeout - finish validation
       if (timeS > videoStartedAtRef.current + MAX_FADE_TIME_S + MAX_VALIDATION_TIME_S) {
-        setPoseLockedIn(true);
+        onCalibTimeout();
       }
     }
 
@@ -145,19 +172,20 @@ export default function ViewCalib({ cbCalibComplete }) {
       clearCanvas(canvasRef.current);
       drawSimpleImage(canvasRef.current, results.image, true);
 
+      // First frame
       if (videoStartedAtRef.current === null) {
         videoStartedAtRef.current = new Date().getTime() / 1000;
         poseValidatorRef.current = new PoseValidator();
+        calibUiEvents.setTopText(TOP_TEXT_VALIDATION);
+        calibUiEvents.setBottomText(BOT_TEXT_VALIDATION);
+        calibUiEvents.setShowFrame(true);
       }
 
       // Draw pose
       fadeInPose(results);
-      if (poseLockedIn) {
-        drawText(canvasRef.current, "Pose locked in!");
-      }
 
       // Validate
-      if (!poseLockedIn) {
+      if (!calibCompleteRef.current) {
         validatePose(results);
       }
     }
@@ -186,38 +214,20 @@ export default function ViewCalib({ cbCalibComplete }) {
       camera.stop();
       pose.close();
     }
-  }, [poseLockedIn]);
-
-  // Wait and transition to next view
-  useEffect(() => {
-    if (poseLockedIn) {
-      setTimeout(() => {
-        cbCalibComplete();
-      }, WAIT_BEFORE_NEXT_S);
-    }
-  }, [cbCalibComplete, poseLockedIn]);
+  }, []);
 
   return (
     <div className="calibRoot">
+
       <div className="loaderPane">
         <h1>Loading...</h1>
-
         <FancyLoader />
       </div>
 
       <video className="inputVideo" ref={videoRef}></video>
       <ResponsiveCanvas canvasRef={canvasRef} idealAspect={IDEAL_ASPECT} />
-      {/* <canvas className="outputCanvas" ref={canvasRef} width={screenSize[1]} height={screenSize[0]}></canvas> */}
-      {/*
-      <div className="personUi">
-        <div className="infoText">
-          Fixing stance...
-        </div>
-        <img src={imgPhotoRim} alt="White angle-rim, marking the area on the screen, where the person needs to stand" />
-        <div className="stateText">
-          You're all set
-        </div>
-      </div> */}
+
+      <CalibUi extEvents={calibUiEvents} />
     </div>
   )
 }

@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   .loaderPane {
     width: 100%;
@@ -28,34 +27,5 @@
     position: absolute;
     top: 0;
     z-index: -1;
-  }
-
-  .personUi {
-    min-width: 100vw;
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .infoText {
-      min-height: 20%;
-
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    img {
-      flex-grow: 1;
-      pointer-events: none;
-      opacity: 0.75;
-    }
-
-    .stateText {
-      position: absolute;
-    }
   }
 }
