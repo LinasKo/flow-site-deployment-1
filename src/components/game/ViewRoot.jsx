@@ -69,3 +69,4 @@ export default function ViewRoot() {
 
 
 // TODO: Looks like s*** when zoomed out
+// TODO: back to fullscreen button somewhere

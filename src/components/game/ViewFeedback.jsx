@@ -4,6 +4,8 @@ import './ViewFeedback.scss';
 
 export default function ViewFeedback() {
   return (
-    <div>ViewFeedback</div>
+    <div className="feedbackRoot">
+      
+    </div>
   )
 }

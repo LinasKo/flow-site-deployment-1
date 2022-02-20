@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import introVideo from "../assets/videos/cat-weugh.mp4";
+import introVideo from "../assets/videos/dog-1280x720.mp4";
 import './ViewIntro.scss';
 
 
