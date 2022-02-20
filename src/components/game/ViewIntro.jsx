@@ -1,49 +1,27 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import introVideo from "../assets/videos/cat-weugh.mp4";
 import './ViewIntro.scss';
 
 
-const IntroStage = {
-  WAITING: "waiting",
-  PLAYING: "playing",
-  FINISHED: "finished"
-}
-
-export default function ViewIntro({ cbStart, cbEmailSubmit }) {
+export default function ViewIntro({ onEmailSubmitted }) {
   const videoRef = useRef(null);
   const emailInRef = useRef(null);
 
-  const [stage, setStage] = useState(IntroStage.WAITING);
+  function handleEmailSubmit() {
+    // TODO: log email
+    console.log("Submitted email:", emailInRef.current.value);
 
-
-  function onClickStart() {
-    cbStart();
-    setStage(IntroStage.PLAYING);
-  }
-
-  function onEmailSubmit() {
-    cbEmailSubmit(emailInRef.current.value);
+    onEmailSubmitted();
   }
 
   return (
     <div className="introRoot">
+      <video ref={videoRef} autoPlay={"autoplay"} src={introVideo} />
 
-      {stage === IntroStage.WAITING && (
-        <button className="startButton" onClick={onClickStart}>
-          Start
-        </button>
-      )}
-
-      {(stage === IntroStage.PLAYING || stage === IntroStage.FINISHED) && (
-        <>
-          <video ref={videoRef} autoPlay={"autoplay"} src={introVideo} />
-
-          <div className="emailForm">
-            <input ref={emailInRef} type="email" placeholder="Enter your email..." />
-            <button onClick={onEmailSubmit}>Let's Start</button>
-          </div>
-        </>
-      )}
+      <div className="emailForm">
+        <input ref={emailInRef} type="email" placeholder="Enter your email..." />
+        <button onClick={handleEmailSubmit}>Let's Start</button>
+      </div>
     </div>
   )
 }

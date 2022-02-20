@@ -1,6 +1,5 @@
-import React from 'react'
-
-import './ViewFeedback.scss'
+import { useState, useEffect, useRef } from 'react';
+import './ViewFeedback.scss';
 
 
 export default function ViewFeedback() {

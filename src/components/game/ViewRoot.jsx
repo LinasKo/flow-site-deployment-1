@@ -1,40 +1,20 @@
-import { useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react'
 
-// import { Pose } from "@mediapipe/pose";
-// import { Camera } from "@mediapipe/camera_utils";
-
-// import { makeFullEmbedding } from '../../js/poseEmbedder';
-// import { jointScores } from '../../js/poseFeedback';
-// import {
-//   drawWithSegmentation,
-//   drawSimpleImage,
-//   drawConnections,
-//   drawPoints,
-//   drawScores
-// } from '../../js/poseVisuals';
+import ViewUi from './ViewUi';
+import ViewPose from './ViewPose';
 
 import './ViewRoot.scss';
 
-import ViewIntro from './ViewIntro';
-import ViewCalib from './ViewCalib';
-import ViewGame from './ViewGame';
-import ViewFeedback from './ViewFeedback';
-
-const GameStage = {
-  PRE_START: "pre_start",
-  INTRO: "intro",
-  CALIBRATING: "calibrating",
-  PLAYING: "playing",
-  FEEDBACK: "feedback"
-};
+// Refer to README.md for architecture details
 
 
 export default function ViewRoot() {
+  const [playing, setPlaying] = useState(false);
   const rootRef = useRef(null);
-  const [gameStage, setGameStage] = useState(GameStage.PRE_START);
+  const uiActions = {};
+  const trackingActions = {};
 
-  /** Request the app to go into fullscreen */
-  function requestFullscreen() {
+  function handleRequestFullscreen() {
     const elem = rootRef.current;
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
@@ -45,42 +25,34 @@ export default function ViewRoot() {
     }
   }
 
-  // Buttons
-  function onClickStart() {
-    requestFullscreen();
-    setGameStage(GameStage.INTRO);
+  function handleStartTracking() {
+    setPlaying(true);
   }
 
-  function onSubmitEmail(email) {
-    console.log("Submitted email:", email);
-    setGameStage(GameStage.CALIBRATING);
+  function handlePoseDetected(poseDetResults) {
+    uiActions.tellPoseDetected(poseDetResults);
   }
 
-  function onCalibComplete() {
-    console.log("Calibration complete");
-    setGameStage(GameStage.PLAYING);
-  }
-
-  function onGameComplete() {
-    console.log("Game complete");
-    setGameStage(GameStage.FEEDBACK);
+  function handleDrawOnCanvas(func) {
+    trackingActions.draw(func);
   }
 
   // Render
   return (
-    <div className="gameContainer" ref={rootRef}>
-      {(gameStage === GameStage.PRE_START || gameStage === GameStage.INTRO) && (
-        <ViewIntro cbEmailSubmit={onSubmitEmail} cbStart={onClickStart} />
+    <div className="viewRoot" ref={rootRef}>
+      {playing && (
+        <ViewPose
+          onPoseDetected={handlePoseDetected}
+          actions={trackingActions}
+        />
       )}
-      {gameStage === GameStage.CALIBRATING && (
-        <ViewCalib cbCalibComplete={onCalibComplete} />
-      )}
-      {gameStage === GameStage.PLAYING && (
-        <ViewGame cbGameComplete={onGameComplete} />
-      )}
-      {gameStage === GameStage.FEEDBACK && (
-        <ViewFeedback />
-      )}
+
+      <ViewUi
+        onRequestFullscreen={handleRequestFullscreen}
+        onStartTracking={handleStartTracking}
+        drawOnCanvas={handleDrawOnCanvas}
+        actions={uiActions}
+      />
     </div>
   );
 }

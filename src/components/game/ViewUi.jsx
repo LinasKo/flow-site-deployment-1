@@ -41,7 +41,6 @@ export default function ViewUi({ onRequestFullscreen, onStartTracking, drawOnCan
   }
 
   function handlePoseDetected(poseDetResults) {
-    console.log("[UI] handlePoseDetected");
     if (has(viewActions, 'tellPoseDetected')) {
       viewActions.tellPoseDetected(poseDetResults);
     }
