@@ -153,8 +153,9 @@ export default function ViewGame({ onGameComplete, actions }) {
             loop={true}
             src={POSES[poseIndex].tutorialVideo}
             width={Math.round(canvasSize[0] * 0.2)}
-          />
-          <h2>Click for tutorial</h2>
+            />
+          <div className="videoCover"/>
+          <div className="tutorialPrompt">Press for tutorial</div>
         </div>
 
         <button className="nextButton" onClick={handleClickNext}>
