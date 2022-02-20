@@ -57,6 +57,18 @@ export default function ViewCalib({ onValidComplete, drawOnCanvas, actions }) {
   const validator = new PoseValidator(MAX_FADE_TIME_S);
   let poseNum = 0;
 
+
+
+
+
+  // DEBUG
+  useEffect(() => {
+    onValidComplete();
+  })
+
+
+
+
   useEffect(() => {
     actions.tellPoseDetected = handlePoseDetected;
   })

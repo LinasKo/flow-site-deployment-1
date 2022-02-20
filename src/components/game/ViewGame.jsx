@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import './ViewGame.scss';
 
 import kungfu1 from '../assets/videos/bad-kungfu-2.mp4';
@@ -25,11 +25,12 @@ const POSES = [
 ];
 
 
-export default function ViewGame({ cbGameComplete, actions }) {
+export default function ViewGame({ onGameComplete, actions }) {
+  const [tutorialMode, setTutorialMode] = useState(false);
+
   const [poseIndex, setPoseIndex] = useState(0);
-  const yogaPoseRef = useRef(POSES[poseIndex]);
-  const [buttonText, setButtonText] = useState(`Next: ${POSES[1].name}`);
-  const cameraRef = useRef(null);
+  const [modeButtonText, setModeButtonText] = useState("");
+  const [nextButtonText, setNextButtonText] = useState("");
 
   useEffect(() => {
     actions.tellPoseDetected = handlePoseDetected;
@@ -38,27 +39,48 @@ export default function ViewGame({ cbGameComplete, actions }) {
   function handlePoseDetected(poseDetResults) {
   }
 
+  function handleClickChangeMode() {
+    setTutorialMode(!tutorialMode);
+  }
+
   function onClickNext() {
     if (poseIndex === POSES.length - 1) {
-      cbGameComplete();
+      onGameComplete();
     } else {
       setPoseIndex(poseIndex + 1);
-      yogaPoseRef.current = POSES[poseIndex + 1];
+
     }
   }
 
+  // Update values based on mode & new pose
+  useEffect(() => {
+    if (tutorialMode) {
+      const thisPose = POSES[poseIndex];
+      setModeButtonText(`Back to: ${thisPose.name}`);
+    } else {
+      setModeButtonText("Tutorial");
+    }
+
+    if (poseIndex + 1 <= POSES.length - 1) {
+      setNextButtonText(`Next: ${POSES[poseIndex + 1].name}`);
+    } else {
+      setNextButtonText("Feedback");
+    }
+  }, [poseIndex, tutorialMode])
+
   return (
     <div className="gameRoot">
-      <select className="modeSelector">
-        <option value="exercise">{yogaPoseRef.current.name}</option>
-        <option value="tutorial">Tutorial</option>
-      </select>
+      <button className="modeSelector"
+        onClick={handleClickChangeMode}
+      >
+        {modeButtonText}
+      </button>
 
       <div className="endText">
         Well Done!
       </div>
 
-      <button onClick={onClickNext}>{buttonText}</button>
+      <button className="nextButton" onClick={onClickNext}>{nextButtonText}</button>
 
     </div>
   )
