@@ -94,17 +94,17 @@ export default function ViewCalib({ cbCalibComplete }) {
   const poseValidatorRef = useRef(null);
 
   /** Call UI functions without updating parent (ViewCalib) */
-  const calibUiEvents = {};
+  const uiEvents = {};
 
   useEffect(() => {
     const video = videoRef.current;
-    console.assert(has(calibUiEvents, 'setTopText'));
-    console.assert(has(calibUiEvents, 'setBottomText'));
-    console.assert(has(calibUiEvents, 'setShowFrame'));
+    console.assert(has(uiEvents, 'setTopText'));
+    console.assert(has(uiEvents, 'setBottomText'));
+    console.assert(has(uiEvents, 'setShowFrame'));
 
     function onCalibSuccess() {
       calibCompleteRef.current = true;
-      calibUiEvents.setBottomText(BOT_TEXT_SUCCESS);
+      uiEvents.setBottomText(BOT_TEXT_SUCCESS);
 
       setTimeout(() => {
         cbCalibComplete();
@@ -113,7 +113,7 @@ export default function ViewCalib({ cbCalibComplete }) {
 
     function onCalibTimeout() {
       calibCompleteRef.current = true;
-      calibUiEvents.setBottomText(BOT_TEXT_TIMEOUT);
+      uiEvents.setBottomText(BOT_TEXT_TIMEOUT);
 
       setTimeout(() => {
         cbCalibComplete();
@@ -176,9 +176,9 @@ export default function ViewCalib({ cbCalibComplete }) {
       if (videoStartedAtRef.current === null) {
         videoStartedAtRef.current = new Date().getTime() / 1000;
         poseValidatorRef.current = new PoseValidator();
-        calibUiEvents.setTopText(TOP_TEXT_VALIDATION);
-        calibUiEvents.setBottomText(BOT_TEXT_VALIDATION);
-        calibUiEvents.setShowFrame(true);
+        uiEvents.setTopText(TOP_TEXT_VALIDATION);
+        uiEvents.setBottomText(BOT_TEXT_VALIDATION);
+        uiEvents.setShowFrame(true);
       }
 
       // Draw pose
@@ -227,7 +227,7 @@ export default function ViewCalib({ cbCalibComplete }) {
       <video className="inputVideo" ref={videoRef}></video>
       <ResponsiveCanvas canvasRef={canvasRef} idealAspect={IDEAL_ASPECT} />
 
-      <CalibUi extEvents={calibUiEvents} />
+      <CalibUi extEvents={uiEvents} />
     </div>
   )
 }
