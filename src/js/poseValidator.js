@@ -1,5 +1,6 @@
 /** For pose validation / calibration - measuring if it's in the shot */
 import { LINKS } from './poseConstants';
+import { makeLandmarkDict } from './poseEmbedder';
 
 
 const LANDMARKS = new Set();
@@ -16,14 +17,17 @@ export class ValidError {
 }
 
 const VALIDATION_PERIOD_S = 1.5;
+const MIN_POSES = 5;
 const VISIBILITY_THRESH = 0.33;
 const STD_THRESH = 100;
+const TIMEOUT_PERIOD_S = 10;
 
 
 export class PoseValidator {
-  constructor() {
-    this.startS = new Date().getTime() / 1000;
+  constructor(minDurationS = 0) {
+    this.startS = null;
     this.prevPoses = [];
+    this.minDurationS = minDurationS;
   }
 
   #clearPoses() {
@@ -34,6 +38,10 @@ export class PoseValidator {
   }
 
   #addPose(landmarks) {
+    if (this.startS === null) {
+      this.startS = new Date().getTime() / 1000;
+    }
+
     const timeS = new Date().getTime() / 1000;
     this.#clearPoses();
     this.prevPoses.push({
@@ -45,6 +53,19 @@ export class PoseValidator {
   validatePose(landmarks) {
     this.#addPose(landmarks);
     const errors = [];
+
+    // Timeout
+    const dur = new Date().getTime() / 1000 - this.startS;
+    if (dur > this.minDurationS && dur > TIMEOUT_PERIOD_S) {
+      console.warn("Validation timed out");
+      return {};
+    }
+
+    // Count
+    const poses = this.prevPoses.length;
+    if (poses < MIN_POSES) {
+      errors.push(new ValidError('count', 'tooFew'));
+    }
 
     // Presence
     for (const lmName of LANDMARKS) {

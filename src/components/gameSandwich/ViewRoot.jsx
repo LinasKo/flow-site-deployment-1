@@ -29,12 +29,21 @@ export default function ViewRoot() {
     setPlaying(true);
   }
 
+  function handlePoseDetected(poseDetResults) {
+    uiActions.tellPoseDetected(poseDetResults);
+  }
+
+  function handleDrawOnCanvas(func) {
+    console.log("Drawing fade");
+    trackingActions.draw(func);
+  }
+
   // Render
   return (
     <div className="viewRoot" ref={rootRef}>
       {playing && (
         <ViewPose
-          onPoseDetected={(poseDetectionResults) => { }}
+          onPoseDetected={handlePoseDetected}
           actions={trackingActions}
         />
       )}
@@ -42,6 +51,7 @@ export default function ViewRoot() {
       <ViewUi
         onRequestFullscreen={handleRequestFullscreen}
         onStartTracking={handleStartTracking}
+        drawOnCanvas={handleDrawOnCanvas}
         actions={uiActions}
       />
     </div>
