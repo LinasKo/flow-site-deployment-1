@@ -5,6 +5,9 @@ import kungfu1 from '../assets/videos/bad-kungfu-2.mp4';
 import kungfu2 from '../assets/videos/bad-kungfu-3.mp4';
 import kungfu3 from '../assets/videos/bad-kungfu-4.mp4';
 
+import { makeFullEmbedding } from 'js/poseEmbedder';
+import { jointScores } from 'js/poseFeedback';
+
 import { getScreenSize } from 'js/deviceTools';
 import { debounce } from 'lodash';
 
@@ -83,6 +86,26 @@ export default function ViewGame({ onGameComplete, actions }) {
   // Handlers
 
   function handlePoseDetected(poseDetResults) {
+    if (tutorialMode) return;
+
+    const embedding = makeFullEmbedding(poseDetResults);
+    if (!embedding) return;
+
+    const pose = POSES[poseIndex];
+    const scores = jointScores(pose.id, embedding);
+
+    // TODO: scores are random
+    // TODO: torso is removed
+
+    // Iterate over scores
+    let total = 0;
+    for (const linkName in scores) {
+      if (linkName === "torso") continue;
+      total += scores[linkName];
+    }
+    total /= Object.keys(scores).length;
+
+    console.log(total);
   }
 
   function handleClickTutorial() {
@@ -138,9 +161,9 @@ export default function ViewGame({ onGameComplete, actions }) {
           {nextButtonText}
         </button>
 
-        <div className="endText">
+        {/* <div className="endText">
           Well Done!
-        </div>
+        </div> */}
 
       </>)}
 

@@ -19,7 +19,7 @@ const GameStage = {
   FEEDBACK: "feedback"
 };
 
-export default function ViewUi({ onRequestFullscreen, onStartTracking, drawOnCanvas, actions }) {
+export default function ViewUi({ onRequestFullscreen, onStartTracking, onGameComplete, drawOnCanvas, actions }) {
   const [gameStage, setGameStage] = useState(GameStage.PRE_START);
   const viewActions = {};
 
@@ -53,6 +53,7 @@ export default function ViewUi({ onRequestFullscreen, onStartTracking, drawOnCan
 
   function handleGameComplete() {
     console.log("[UI] Game Complete");
+    onGameComplete();
     setGameStage(GameStage.FEEDBACK);
   }
 

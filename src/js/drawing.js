@@ -28,6 +28,8 @@ const THICKNESS_GRADED = 6;
 
 
 export function drawWithSegmentation(canvas, poseDetResults) {
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
   ctx.save();
 
@@ -48,6 +50,8 @@ export function drawWithSegmentation(canvas, poseDetResults) {
 }
 
 export function drawSimpleImage(canvas, image, flipped = false) {
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
   ctx.save();
 
@@ -63,6 +67,8 @@ export function drawSimpleImage(canvas, image, flipped = false) {
 }
 
 export function drawMpConnections(canvas, poseDetResults) {
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
   ctx.save();
 
@@ -74,6 +80,7 @@ export function drawMpConnections(canvas, poseDetResults) {
 }
 
 export function drawConnections(canvas, embedding, configs = null, flip = false) {
+  if (!canvas) return;
   if (!embedding) return;
 
   const ctx = canvas.getContext("2d");
@@ -120,6 +127,7 @@ export function drawConnections(canvas, embedding, configs = null, flip = false)
 }
 
 export function drawPoints(canvas, embedding, configs = null, flip = false) {
+  if (!canvas) return;
   if (!embedding) return;
 
   const ctx = canvas.getContext("2d");
@@ -161,6 +169,8 @@ export function drawPoints(canvas, embedding, configs = null, flip = false) {
 
 /** A very basic function to just draw a connection between two landmarks */
 export function drawBasicConnection(canvas, landmark1, landmark2, opacity, flip = false) {
+  if (!canvas) return;
+
   let { xImg: x0, yImg: y0 } = landmark1;
   let { xImg: x1, yImg: y1 } = landmark2;
   x0 *= canvas.width;
@@ -187,6 +197,7 @@ export function drawBasicConnection(canvas, landmark1, landmark2, opacity, flip 
 }
 
 export function drawScores(canvas, embedding, scores, configs = null, flip = false) {
+  if (!canvas) return;
   if (!embedding) return;
 
   const ctx = canvas.getContext("2d");
@@ -253,6 +264,8 @@ export function drawScores(canvas, embedding, scores, configs = null, flip = fal
 }
 
 export function drawText(canvas, text) {
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
   ctx.save();
 
@@ -268,6 +281,8 @@ export function drawText(canvas, text) {
 }
 
 export function clearCanvas(canvas) {
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
   ctx.save();
 

@@ -66,18 +66,17 @@ export default function ViewPose({ onPoseDetected, actions }) {
 
   // Internal
   const poseTrackingOn = useCallback(() => {
-    poseTrackingOnRef.current = true;
+    return poseTrackingOnRef.current = true;
   }, [])
   const poseTrackingOff = useCallback(() => {
-    poseTrackingOnRef.current = true;
+    return poseTrackingOnRef.current = true;
   }, [])
   const cameraOn = useCallback(() => {
-    cameraRef.current?.start();
+    return cameraRef.current?.start();
   }, [])
   const cameraOff = useCallback(() => {
-    poseTrackingOff();
-    cameraRef.current?.stop();
-  }, [poseTrackingOff])
+    return cameraRef.current?.stop();
+  }, [])
 
   const handlePoseResults = useCallback((poseDetResults) => {
     onPoseDetected(poseDetResults);

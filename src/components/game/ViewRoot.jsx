@@ -33,6 +33,15 @@ export default function ViewRoot() {
     uiActions.tellPoseDetected(poseDetResults);
   }
 
+  function handleGameComplete() {
+    trackingActions.cameraOff().then(() => {
+      setTimeout(() => {
+        setPlaying(false);
+      }, 100);
+    });
+
+  }
+
   function handleDrawOnCanvas(func) {
     trackingActions.draw(func);
   }
@@ -50,9 +59,13 @@ export default function ViewRoot() {
       <ViewUi
         onRequestFullscreen={handleRequestFullscreen}
         onStartTracking={handleStartTracking}
+        onGameComplete={handleGameComplete}
         drawOnCanvas={handleDrawOnCanvas}
         actions={uiActions}
       />
     </div>
   );
 }
+
+
+// TODO: Looks like s*** when zoomed out
