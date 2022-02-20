@@ -6,21 +6,26 @@
   width: 100%;
   height: 100%;
 
-  .modeSelector {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #000000;
+  .modeText {
+    position: absolute;
+    top: 10%;
+    font-size: 4rem;
   }
 
-  .endText {
-    color: white;
-    font-size: 2em;
-    font-weight: bold;
-    text-align: center;
+  .helperVideoPanel {
+    max-width: 20%;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    video {
+      margin-bottom: .5rem;
+    }
   }
 
   .nextButton {
@@ -35,5 +40,12 @@
     padding: 1rem;
     border-radius: 10px;
     cursor: pointer;
+  }
+
+  .endText {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
   }
 }
