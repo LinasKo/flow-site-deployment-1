@@ -89,6 +89,10 @@ export default function ViewGame({ onGameComplete, actions }) {
     setTutorialMode(true);
   }
 
+  function handleClickBackToPose() {
+    setTutorialMode(false);
+  }
+
   function handleClickNext() {
     if (poseIndex === POSES.length - 1) {
       onGameComplete();
@@ -138,6 +142,24 @@ export default function ViewGame({ onGameComplete, actions }) {
           Well Done!
         </div>
 
+      </>)}
+
+      {tutorialMode && (<>
+        <video
+          autoPlay={true}
+          muted={false}
+          loop={true}
+          controls={true}
+          src={POSES[poseIndex].tutorialVideo}
+          width={canvasSize[0]}
+          height={canvasSize[1]}
+        />
+
+        <button className="backToPoseButton"
+          onClick={handleClickBackToPose}
+        >
+          Go Back
+        </button>
       </>)}
 
     </div>

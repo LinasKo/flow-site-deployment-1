@@ -48,4 +48,18 @@
     font-weight: bold;
     text-align: center;
   }
+
+  .backToPoseButton {
+    position: absolute;
+    bottom: 50px;
+    min-width: 50%;
+    background-color: #f0f0f0a0;
+    border-top: 1px solid #cccccc;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 }
