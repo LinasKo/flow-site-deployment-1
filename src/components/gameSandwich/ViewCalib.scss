@@ -1,0 +1,31 @@
+.calibRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .loaderPane {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    background-color: black;
+    z-index: -2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      color: white;
+    }
+  }
+
+  .outputCanvas {
+    // width: 100vw;
+    height: 90vh;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+  }
+}

@@ -5,7 +5,8 @@ import {
   Route
 } from "react-router-dom";
 
-import ViewRoot from './components/game/ViewRoot';
+import ViewRoot from './components/gameSandwich/ViewRoot';
+
 import ReactFullpage from '@fullpage/react-fullpage';
 
 import Banner from './components/website/Banner'

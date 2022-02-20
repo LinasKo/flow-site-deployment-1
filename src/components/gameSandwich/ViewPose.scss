@@ -1,0 +1,9 @@
+.poseRoot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  video {
+    display: none;
+  }
+}

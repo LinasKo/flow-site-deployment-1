@@ -1,5 +1,28 @@
 # LetsFlow Demo Website
 
+## Architecture
+The normal way to make the app is as follows:
+1. A top-level Finite-State-Machine component that tracks the state of the app, schedules which components are rendered.
+2. Each component has elements of:
+  1. Video / canvas + pose tracking
+  2. UI elements - buttons, etc
+3. ...
+4. Profit?
+
+**The problems**:
+* When the top-level element changes, Video + pose-tracking is reinitialized, which takes 10+ seconds.
+* We suddenly need to protect everything in the hierarchy leading up to pose tracking from having state / rerendering.
+
+**Solution**: Sandwich architecture:
+* Top-level component with no state, but can pass messages between children. Contains:
+  * Video / canvas + pose tracking, with mostly no state.
+  children of this, like canvas, will have state, e.g. so it can rerender in RARE occasions, say, on orientation changes. But otherwise it's just controlled by functions, to, e.g. turn off pose tracking / camera.
+  * Contains stateful FSM element for controlling the flow of the app. Has much state, much, UI and is basically a normal React world. Through functions, it is also told about anything related to the pose itself.
+
+Disadvantages:
+1. Maybe hard to pass messages between components, but we'll see.
+2. It's unclear whether tutorial videos should be played on the UI or the Pose view.
+
 ## Installation
 
 #### 1. fullpage issues
