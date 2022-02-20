@@ -22,7 +22,13 @@
        url('../src/components/assets/fonts/mulish-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+}
 
+@font-face {
+  font-family: "scriptina";
+  src: url("../src/components/assets/fonts/SCRIPTIN.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 :root{
