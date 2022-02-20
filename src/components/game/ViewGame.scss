@@ -9,7 +9,15 @@
   .modeText {
     position: absolute;
     top: 10%;
-    font-size: 4rem;
+    font-size: 3rem;
+    color: white;
+    text-shadow: 2px 2px 3px #ffffff40;
+    z-index: 2;
+
+    padding: 0rem 4rem;
+    background-color: #00000020;
+    box-shadow: 0px 0px 30px 60px #00000020;
+    border-radius: 0.5rem;
   }
 
   .helperVideoPanel {

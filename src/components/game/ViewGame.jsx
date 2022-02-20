@@ -32,7 +32,6 @@ const POSES = [
 const IDEAL_ASPECT = 1920 / 1080;
 
 
-
 function increaseToAspect([width, height], aspect) {
   let newHeight = height;
 
@@ -63,6 +62,7 @@ export default function ViewGame({ onGameComplete, actions }) {
   const [poseIndex, setPoseIndex] = useState(0);
   const [modeButtonText, setModeButtonText] = useState("");
   const [nextButtonText, setNextButtonText] = useState("");
+  const [triedTutorialTimes, setTriedTutorialTimes] = useState(localStorage.getItem("triedTutorialTimes") || 0);
 
   // External actions
   useEffect(() => {
@@ -109,6 +109,8 @@ export default function ViewGame({ onGameComplete, actions }) {
   }
 
   function handleClickTutorial() {
+    setTriedTutorialTimes(triedTutorialTimes + 1);
+    localStorage.setItem("triedTutorialTimes", triedTutorialTimes + 1);
     setTutorialMode(true);
   }
 
@@ -121,7 +123,6 @@ export default function ViewGame({ onGameComplete, actions }) {
       onGameComplete();
     } else {
       setPoseIndex(poseIndex + 1);
-
     }
   }
 
@@ -153,9 +154,12 @@ export default function ViewGame({ onGameComplete, actions }) {
             loop={true}
             src={POSES[poseIndex].tutorialVideo}
             width={Math.round(canvasSize[0] * 0.2)}
-            />
-          <div className="videoCover"/>
-          <div className="tutorialPrompt">Press for tutorial</div>
+          />
+
+          {triedTutorialTimes < 2 && (<>
+            <div className="videoCover" />
+            <div className="tutorialPrompt">Press for tutorial</div>
+          </>)}
         </div>
 
         <button className="nextButton" onClick={handleClickNext}>
