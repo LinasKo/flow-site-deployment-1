@@ -81,6 +81,7 @@ export default function ViewUi({ onRequestFullscreen, onStartTracking, onGameCom
       {gameStage === GameStage.PLAYING && (
         <ViewGame
           onGameComplete={handleGameComplete}
+          drawOnCanvas={drawOnCanvas}
           actions={viewActions}
         />
       )}

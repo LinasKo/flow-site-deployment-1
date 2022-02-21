@@ -131,7 +131,7 @@ export function drawPoints(canvas, embedding, configs = null, flip = false) {
   if (!embedding) return;
 
   const ctx = canvas.getContext("2d");
-  ctx.save();
+  ctx.save(); 
 
   ctx.globalCompositeOperation = 'source-over';
 

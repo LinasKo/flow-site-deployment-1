@@ -7,6 +7,7 @@ import kungfu3 from '../assets/videos/bad-kungfu-4.mp4';
 
 import { makeFullEmbedding } from 'js/poseEmbedder';
 import { jointScores } from 'js/poseFeedback';
+import { drawScores } from 'js/drawing';
 
 import { getScreenSize } from 'js/deviceTools';
 import { debounce } from 'lodash';
@@ -55,7 +56,7 @@ function getIdealCanvasSize(idealAspect) {
   return [sw, sh];
 }
 
-export default function ViewGame({ onGameComplete, actions }) {
+export default function ViewGame({ onGameComplete, drawOnCanvas, actions }) {
   const [canvasSize, setCanvasSize] = useState(getIdealCanvasSize(IDEAL_ASPECT));
   const [tutorialMode, setTutorialMode] = useState(false);
 
@@ -93,6 +94,8 @@ export default function ViewGame({ onGameComplete, actions }) {
 
     const pose = POSES[poseIndex];
     const scores = jointScores(pose.id, embedding);
+
+    drawOnCanvas((canvas) => drawScores(canvas, embedding, scores, null, true));
 
     // TODO: scores are random
     // TODO: torso is removed
