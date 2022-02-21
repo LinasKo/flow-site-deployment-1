@@ -99,6 +99,7 @@ export default function ViewCalib({ onValidComplete, drawOnCanvas, actions }) {
 
   return (
     <div className="calibRoot">
+      <div className="topText">Stand back so your whole body fits on the screen</div>
     </div>
   )
 }
